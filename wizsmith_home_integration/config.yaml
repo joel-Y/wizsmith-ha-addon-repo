@@ -1,0 +1,31 @@
+name: "WizSmith Home Integration"
+version: "3.0.0"
+slug: "wizsmith_home_integration"
+description: "Advanced WizSmith add-on with MQTT, sensor sync, voice alerts, and Gemini API integration."
+startup: application
+boot: auto
+homeassistant_api: true
+hassio_api: true
+init: false
+arch:
+  - aarch64
+  - armv7
+  - amd64
+ports:
+  8554/tcp: 8554
+map:
+  - config:rw
+  - share:rw
+  - ssl
+options:
+  mqtt_host: "mqtt://core-mosquitto"
+  mqtt_port: 1883
+  tts_enabled: true
+  gemini_api_env: "GEMINI_API_KEY"
+  ffmpeg_relay: "hls"
+schema:
+  mqtt_host: str
+  mqtt_port: int
+  tts_enabled: bool
+  gemini_api_env: str
+  ffmpeg_relay: str

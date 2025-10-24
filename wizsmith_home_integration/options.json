@@ -1,0 +1,7 @@
+{
+  "mqtt_host": "mqtt://core-mosquitto",
+  "mqtt_port": 1883,
+  "tts_enabled": true,
+  "gemini_api_env": "GEMINI_API_KEY",
+  "ffmpeg_relay": "hls"
+}
