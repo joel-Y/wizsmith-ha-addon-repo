@@ -18,11 +18,11 @@ else
   FFMPEG_RELAY="hls"
 fi
 
-# Load .env if present in /data (persisted by user in Add-on UI or supervisor)
+# Load .env if present in /data
 if [ -f /data/.env ]; then
   export $(cat /data/.env | xargs)
 else
-  echo "Warning: /data/.env not found. Create it and add your GEMINI_API_KEY as $GEMINI_ENV_NAME for Gemini features."
+  echo "⚠️ Warning: /data/.env not found. Create it and add your GEMINI_API_KEY as $GEMINI_ENV_NAME for Gemini features."
 fi
 
 # Export variables for Python app
@@ -40,11 +40,20 @@ fi
 echo "MQTT host: $MQTT_HOST"
 echo "TTS enabled: $TTS_ENABLED"
 echo "FFmpeg relay mode: $FFMPEG_RELAY"
+
 if [ -n "$GEMINI_API_KEY" ]; then
-  echo "Gemini API key present in environment."
+  echo "✅ Gemini API key found and loaded."
 else
-  echo "Gemini API key NOT found. Gemini features will be disabled until you place a .env in Supervisor Add-on store or /config/addons_config/wizsmith_home_integration/ with GEMINI_API_KEY."
+  echo "❌ Gemini API key NOT found. Gemini features will be disabled until configured."
 fi
 
-# Start the main Python app
-python3 /app/main.py
+# Activate virtual environment before starting app
+if [ -d "/venv" ]; then
+  echo "Activating Python virtual environment..."
+  . /venv/bin/activate
+else
+  echo "⚠️ Virtual environment not found at /venv — proceeding without activation."
+fi
+
+# Start main Python app
+exec python /app/main.py
