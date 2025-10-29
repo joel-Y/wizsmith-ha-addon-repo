@@ -6,6 +6,8 @@
   "arch": ["armv7", "armhf", "aarch64", "amd64"],
   "startup": "services",
   "boot": "auto",
+  "logo": "logo.png",
+  "background": "logo.png",
   "options": {
     "ha_token": "YOUR_HA_LONG_LIVED_TOKEN",
     "mqtt_host": "74.208.69.198",
