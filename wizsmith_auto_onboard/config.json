@@ -1,0 +1,29 @@
+{
+  "name": "WizSmith Auto-Onboard",
+  "version": "1.0",
+  "slug": "wizsmith_auto_onboard",
+  "description": "Auto-onboards Pi devices, fetches HA sensors and cameras, integrates Frigate AI Hat, and sends alerts to OpenRemote and customers.",
+  "arch": ["armv7", "armhf", "aarch64", "amd64"],
+  "startup": "services",
+  "boot": "auto",
+  "options": {
+    "ha_token": "YOUR_HA_LONG_LIVED_TOKEN",
+    "mqtt_host": "74.208.69.198",
+    "mqtt_port": 1883,
+    "mqtt_user": "wizsmith",
+    "mqtt_pass": "password",
+    "google_api_key": "YOUR_GOOGLE_LIVE_API_KEY",
+    "alert_email": "customer@example.com",
+    "alert_phone": "+1234567890"
+  },
+  "schema": {
+    "ha_token": "str",
+    "mqtt_host": "str",
+    "mqtt_port": "int",
+    "mqtt_user": "str",
+    "mqtt_pass": "str",
+    "google_api_key": "str",
+    "alert_email": "str",
+    "alert_phone": "str"
+  }
+}

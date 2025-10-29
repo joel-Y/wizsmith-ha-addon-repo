@@ -1,0 +1,3 @@
+# Frigate camera config will be auto-filled from Home Assistant
+cameras:
+  # Cameras auto-added via onboard.py from HA
