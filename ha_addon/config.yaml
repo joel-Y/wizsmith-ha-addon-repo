@@ -1,0 +1,17 @@
+name: WizSmith Edge Hub
+version: "1.0.0"
+slug: wizsmith_edge_hub
+description: Secure Edge Hub forwarding HA + MQTT events to OpenRemote
+arch:
+  - aarch64
+startup: services
+options:
+  mqtt_host: homeassistant.local
+  mqtt_port: 1883
+  mqtt_user: wizha
+  mqtt_pass: your-test-pass
+schema:
+  mqtt_host: str
+  mqtt_port: int
+  mqtt_user: str
+  mqtt_pass: str
