@@ -1,12 +1,12 @@
 [Unit]
-Description=WizSmith Onboarding Service
+Description=WizSmith Edge Hub - Onboarding Service
 After=network.target
 
 [Service]
 ExecStart=/usr/bin/python3 /opt/wizsmith_edge_hub/services/onboarding/main.py
 WorkingDirectory=/opt/wizsmith_edge_hub
-Restart=always
 EnvironmentFile=/opt/wizsmith_edge_hub/.env
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

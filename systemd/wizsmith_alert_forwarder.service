@@ -1,0 +1,12 @@
+[Unit]
+Description=WizSmith Edge Hub - Alert Forwarder
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /opt/wizsmith_edge_hub/services/alert_forwarder/main.py
+WorkingDirectory=/opt/wizsmith_edge_hub
+EnvironmentFile=/opt/wizsmith_edge_hub/.env
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

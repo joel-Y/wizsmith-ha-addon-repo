@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 set -e
-echo "Installing Python wheels offline..."
-pip install --no-index --find-links=./wheels -r requirements.txt || echo "Done"
+echo "Installing WizSmith Edge Hub (offline mode)"
+pip install --no-index --find-links=./wheels -r requirements.txt

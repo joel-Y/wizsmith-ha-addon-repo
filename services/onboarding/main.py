@@ -1,30 +1,30 @@
-import os, time, paho.mqtt.client as mqtt
-import json, websocket
+import os, json, time, paho.mqtt.client as mqtt, websockets, asyncio
 
-mqtt_host = os.getenv("MQTT_HOST", "localhost")
-mqtt_port = int(os.getenv("MQTT_PORT", "1883"))
-mqtt_user = os.getenv("MQTT_USER", "")
-mqtt_pass = os.getenv("MQTT_PASS", "")
-ws_url = os.getenv("OPENREMOTE_WS", "wss://74.208.69.198:8443/ws")
+MQTT_HOST = os.getenv("MQTT_HOST", "homeassistant.local")
+MQTT_PORT = int(os.getenv("MQTT_PORT", 1883))
+MQTT_USER = os.getenv("MQTT_USER", "wizha")
+MQTT_PASS = os.getenv("MQTT_PASS", "Pa$$w0rd123")
+OR_WS = os.getenv("OR_WS", "wss://74.208.69.198:8443/ws")
 
-print("🔗 Connecting to MQTT:", mqtt_host)
-client = mqtt.Client()
-client.username_pw_set(mqtt_user, mqtt_pass)
-client.connect(mqtt_host, mqtt_port, 60)
-
-print("🌐 Connecting to OpenRemote WS:", ws_url)
-ws = websocket.create_connection(ws_url, timeout=10)
+async def send_to_openremote(payload):
+    try:
+        async with websockets.connect(OR_WS) as ws:
+            await ws.send(json.dumps(payload))
+    except Exception as e:
+        print(f"[onboarding] WS error: {e}")
 
 def on_message(client, userdata, msg):
-    try:
-        payload = msg.payload.decode()
-        ws.send(json.dumps({"topic": msg.topic, "payload": payload}))
-        print(f"📡 Forwarded {msg.topic}")
-    except Exception as e:
-        print("Error:", e)
+    payload = {"topic": msg.topic, "data": msg.payload.decode()}
+    asyncio.run(send_to_openremote(payload))
 
-client.on_message = on_message
-client.subscribe("#")
+def main():
+    client = mqtt.Client()
+    client.username_pw_set(MQTT_USER, MQTT_PASS)
+    client.on_message = on_message
+    client.connect(MQTT_HOST, MQTT_PORT, 60)
+    client.subscribe("#")
+    print("[onboarding] Connected to MQTT. Listening...")
+    client.loop_forever()
 
-print("✅ Bridge running...")
-client.loop_forever()
+if __name__ == "__main__":
+    main()
